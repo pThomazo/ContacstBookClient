@@ -51,6 +51,95 @@
 
     </div>
 
+     <script>
+           /**
+             * Download contacts from the server
+             * 
+             * @returns {undefined}
+             */
+            function downloadContacts() {
+                tableBody = document.getElementById("contacts_table_body");
+                console.log("TB: " + tableBody);
+                req = new XMLHttpRequest();
+                req.onreadystatechange = function () {
+                    console.log("orsc. s: " + req.readyState);
+                    // console.log("stat: "+r)
+                    if (req.readyState === 4 && req.status === 200) {
+                        console.log("rs 4");
+                        var ctArray = req.responseText;
+
+                        console.log("Resp text: " + ctArray);
+
+                        var contacts = JSON.parse(ctArray);
+
+                        //Clear the table
+                        tableBody.innerHTML = "";
+
+                        contacts.forEach(function (val, idx, array) {
+                            //id
+                            nodeTr = document.createElement('tr');
+                            nodeTd = document.createElement('td');
+                            textNode = document.createTextNode(val.id);
+                            nodeTd.appendChild(textNode);
+                            nodeTr.appendChild(nodeTd);
+
+                            //name
+                            nodeTd = document.createElement('td');
+                            textNode = document.createTextNode(val.name);
+                            nodeTd.appendChild(textNode);
+                            nodeTr.appendChild(nodeTd);
+
+                            //number
+                            nodeTd = document.createElement('td');
+                            textNode = document.createTextNode(val.number);
+                            nodeTd.appendChild(textNode);
+                            nodeTr.appendChild(nodeTd);
+
+                            tableBody.appendChild(nodeTr);
+                            console.log("adic nó");
+                        });
+
+                    }
+                };
+                req.open("get", "http://127.0.0.1:3000/contacts");
+                req.send();
+            }
+
+          function addContact() {
+                nameField = document.getElementById("name_field");
+                numberField = document.getElementById("number_field");
+                req = new XMLHttpRequest();
+                req.onreadystatechange = function () {
+                    console.log("orsc. s: " + req.readyState);
+                    if (req.readyState === 4 && req.status === 200) {
+                        console.log("rs 4");
+
+                        nameField.value = "";
+                        numberField.value = "";
+
+                        document.getElementById("cont_suc_alert").style.
+                                display = "block";
+                        window.setTimeout(function () {
+                            hideNofifyContAdded();
+                        }, 3000);
+
+                        downloadContacts();
+                    }
+                };
+                req.open("POST", "http://127.0.0.1:3000/new_contact", true);
+                var newCont = {id: '', name: nameField.value,
+                    number: numberField.value};
+                req.setRequestHeader("Content-Type", "application/json");
+                req.send(JSON.stringify(newCont));
+
+            }
+
+            function hideNofifyContAdded() {
+                console.log("hiding");
+                document.getElementById("cont_suc_alert").style.
+                        display = "none";
+            }
+     </script>
 </body>
 
 </html>
