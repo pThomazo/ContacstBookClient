@@ -1,113 +1,68 @@
 <html>
 
 <head>
-    <title>Simple Contact Book</title>
+    <title>Restaurant</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
 </head>
 
 <body>
-    <h1>Simple Contact Book</h1>
+    <h1>Restaurant</h1>
 
-    <div id="nav">
-        <a href="">Add contact</a>
+    <input type="text" name="user_name" />
 
+    <button onclick="showMeal()">
+        Meal
+    </button>
+
+    <div id="meal" style="display: none;">
+        <div id="entree">
+            <input type="checkbox" id="ent1" value="1" />
+            <input type="checkbox" id="ent2" value="2" />
+
+        </div>
+
+        <div id="main course">
+            <input type="checkbox" id="mc1" value="1" />
+            <input type="checkbox" id="mc2" value="2" />
+        </div>
+
+        <div id="dessert">
+            <input type="checkbox" id="mc1" value="1" />
+            <input type="checkbox" id="mc2" value="2" />
+        </div>
+
+        <button onclickd="choiceCompleted()">Done</button>
     </div>
 
-    <!-- Add contact form-->
-    <div>
+    <!-- Result -->
 
-        <label for="name_field">Name:</label>
-        <input type="text" name="tasktitle" id="name_field" />
-
-        <label for="number_field">Number:</label>
-        <input type="number" name="tasktitle" id="number_field">
-
-        <button onclick="addContact()">Add</button>
-
-        <div class="alert alert-success" style="display: none" id="cont_suc_alert">
-            Cotact added</div>
-    </div>
-
-    <!-- Phones tab -->
-    <div>
-
-        <button onclick="downloadContacts()">Update</button>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Phone number</th>
-                </tr>
-            </thead>
-
-            <tbody id="contacts_table_body">
-
-
-            </tbody>
-        </table>
-
+    <div id="div_result">
+        Hi <span id="name_span"></span>, you chose
+        <span id="ent_span"></span><br>
+        <span id="mc_span"></span><br>
+        <span id="dess_span"></span><br />
     </div>
 
     <script>
+        function choiceCompleted() {
+            mealDiv = document.getElementById("meal");
+            mealDiv.style.display = none;
 
-        window.onload = function () {
-            downloadContacts();
-        };
+            resD = document.getElementById("resultDiv");
+            resD.style.display = "block";
 
-        /**
-                     * Download contacts from the server
-                     * 
-                     * @returns {undefined}
-                     */
-        function downloadContacts() {
-            tableBody = document.getElementById("contacts_table_body");
-            console.log("TB: " + tableBody);
-            req = new XMLHttpRequest();
-            req.onreadystatechange = function () {
-                console.log("orsc. s: " + req.readyState);
-                // console.log("stat: "+r)
-                if (req.readyState === 4 && req.status === 200) {
-                    console.log("rs 4");
-                    var ctArray = req.responseText;
+            us_name = document.getElementById("user_name").value;
+            document.getElementById("name_span").value = us_name;
+            document.getElementById("ent_span").value ="ent";
+            document.getElementById("mc_span").value = "mc";
+            document.getElementById("dess_span").value = "dess";
+        }
 
-                    console.log("Resp text: " + ctArray);
-
-                    var contacts = JSON.parse(ctArray);
-
-                    //Clear the table
-                    tableBody.innerHTML = "";
-
-                    contacts.forEach(function (val, idx, array) {
-                        //id
-                        nodeTr = document.createElement('tr');
-                        nodeTd = document.createElement('td');
-                        textNode = document.createTextNode(val.id);
-                        nodeTd.appendChild(textNode);
-                        nodeTr.appendChild(nodeTd);
-
-                        //name
-                        nodeTd = document.createElement('td');
-                        textNode = document.createTextNode(val.name);
-                        nodeTd.appendChild(textNode);
-                        nodeTr.appendChild(nodeTd);
-
-                        //number
-                        nodeTd = document.createElement('td');
-                        textNode = document.createTextNode(val.number);
-                        nodeTd.appendChild(textNode);
-                        nodeTr.appendChild(nodeTd);
-
-                        tableBody.appendChild(nodeTr);
-                        console.log("adic nó");
-                    });
-
-                }
-            };
-            req.open("get", "http://127.0.0.1:3000/contacts");
-            req.send();
+        function showMeal() {
+            mealDiv = document.getElementById("meal");
+            mealDiv.style.display = block;
         }
 
         function addContact() {
