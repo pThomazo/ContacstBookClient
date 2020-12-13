@@ -10,7 +10,7 @@
 <body>
     <h1>Restaurant</h1>
 
-    <input type="text" name="user_name" />
+    <input type="text" name="user_name" /><br/>
 
     <button onclick="showMeal()">
         Meal
@@ -20,7 +20,6 @@
         <div id="entree">
             <input type="checkbox" id="ent1" value="1" />
             <input type="checkbox" id="ent2" value="2" />
-
         </div>
 
         <div id="main course">
@@ -33,13 +32,13 @@
             <input type="checkbox" id="mc2" value="2" />
         </div>
 
-        <button onclickd="choiceCompleted()">Done</button>
+        <button onclick="choiceCompleted()">Done</button>
     </div>
 
     <!-- Result -->
 
-    <div id="div_result">
-        Hi <span id="name_span"></span>, you chose
+    <div id="div_result" style="display: none;">
+        Hi <span id="name_span">t</span>, you chose
         <span id="ent_span"></span><br>
         <span id="mc_span"></span><br>
         <span id="dess_span"></span><br />
@@ -47,22 +46,24 @@
 
     <script>
         function choiceCompleted() {
-            mealDiv = document.getElementById("meal");
-            mealDiv.style.display = none;
+           //document.write("test");
+            resD = document.getElementById("div_result");
+           resD.style.display = "block";
 
-            resD = document.getElementById("resultDiv");
-            resD.style.display = "block";
+ mealDiv = document.getElementById("meal");
+           mealDiv.style.display = "none";
 
-            us_name = document.getElementById("user_name").value;
-            document.getElementById("name_span").value = us_name;
-            document.getElementById("ent_span").value ="ent";
-            document.getElementById("mc_span").value = "mc";
-            document.getElementById("dess_span").value = "dess";
+            var us_name = document.getElementById("user_name").value;
+            
+            document.getElementById("name_span").innerHTML = us_name;
+           // document.getElementById("ent_span").value ="ent";
+           // document.getElementById("mc_span").value = "mc";
+           // document.getElementById("dess_span").value = "dess";
         }
 
         function showMeal() {
             mealDiv = document.getElementById("meal");
-            mealDiv.style.display = block;
+            mealDiv.style.display = "block";
         }
 
         function addContact() {
