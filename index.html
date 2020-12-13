@@ -10,24 +10,30 @@
 <body>
     <h1>Restaurant</h1>
 
-    <input type="text" name="user_name" /><br/>
+    <div id="start">
+        <label for="user_name">Your name:</label>
+        <input type="text" id="user_name" /><br />
 
-    <button onclick="showMeal()">
-        Meal
-    </button>
+        <button onclick="showMeal()">
+            Meal
+        </button>
+    </div>
 
     <div id="meal" style="display: none;">
         <div id="entree">
+            <h5>Entree</h5>
             <input type="checkbox" id="ent1" value="1" />
             <input type="checkbox" id="ent2" value="2" />
         </div>
 
         <div id="main course">
+             <h5>Main course</h5>
             <input type="checkbox" id="mc1" value="1" />
             <input type="checkbox" id="mc2" value="2" />
         </div>
 
         <div id="dessert">
+             <h5>Dessert</h5>
             <input type="checkbox" id="mc1" value="1" />
             <input type="checkbox" id="mc2" value="2" />
         </div>
@@ -39,31 +45,46 @@
 
     <div id="div_result" style="display: none;">
         Hi <span id="name_span">t</span>, you chose
-        <span id="ent_span"></span><br>
-        <span id="mc_span"></span><br>
-        <span id="dess_span"></span><br />
+        <span id="ent_span"></span><br>,
+        <span id="mc_span"></span><br> and
+        <span id="dess_span"></span><br />. <br />
+        Sit on the chair <span id="chair_number"></span>
     </div>
 
     <script>
         function choiceCompleted() {
-           //document.write("test");
+            //document.write("test");
             resD = document.getElementById("div_result");
-           resD.style.display = "block";
+            resD.style.display = "block";
 
- mealDiv = document.getElementById("meal");
-           mealDiv.style.display = "none";
+            mealDiv = document.getElementById("meal");
+            mealDiv.style.display = "none";
 
             var us_name = document.getElementById("user_name").value;
-            
-            document.getElementById("name_span").innerHTML = us_name;
-           // document.getElementById("ent_span").value ="ent";
-           // document.getElementById("mc_span").value = "mc";
-           // document.getElementById("dess_span").value = "dess";
+
+            document.getElementById("name_span").textContent = us_name;
+
+            document.getElementById("ent_span").textContent = "ent";
+            document.getElementById("mc_span").textContent = "mc";
+            document.getElementById("dess_span").textContent = "dess";
+
+            document.getElementById("chair_number").textContent = getRandomInt(1, 50);
         }
 
         function showMeal() {
             mealDiv = document.getElementById("meal");
             mealDiv.style.display = "block";
+
+            document.getElementById("start").style.display = "none";
+        }
+
+        /**
+         * From https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+         */
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min;
         }
 
         function addContact() {
