@@ -23,7 +23,7 @@
         <div id="entree">
             <h5>Entree</h5>
             <label for="ent1">Ent 1</label>
-            <input type="radio" name="ent" id="ent1" value="ent_1" />
+            <input type="radio" name="ent" id="ent1" value="ent_1" /><br />
             <label for="ent2">Ent 2</label>
             <input type="radio" name="ent" id="ent2" value="ent_2" />
         </div>
@@ -31,7 +31,7 @@
         <div id="main course">
             <h5>Main course</h5>
             <label for="mc1">Mc 1</label>
-            <input type="radio" name="mc" id="mc1" value="mc_1" />
+            <input type="radio" name="mc" id="mc1" value="mc_1" /><br />
             <label for="mc2">Mc 2</label>
             <input type="radio" name="mc" id="mc2" value="mc_2" />
         </div>
@@ -39,7 +39,7 @@
         <div id="dessert">
             <h5>Dessert</h5>
             <label for="dess1">Dess 1</label>
-            <input type="radio" name="dessert" id="dess1" value="dess_1" />
+            <input type="radio" name="dessert" id="dess1" value="dess_1" /><br />
             <label for="dess1">Dess 1</label>
             <input type="radio" name="dessert" id="dess2" value="dess_2" />
         </div>
@@ -53,7 +53,7 @@
         Hi <span id="name_span">t</span>, you chose
         <span id="ent_span"></span><br>,
         <span id="mc_span"></span><br> and
-        <span id="dess_span"></span><br />. <br />
+        <span id="dess_span"></span>. <br />
         Sit on the chair <span id="chair_number"></span>
     </div>
 
@@ -70,10 +70,27 @@
 
             document.getElementById("name_span").textContent = us_name;
 
-            document.getElementById("ent_span").textContent = "ent";
-            document.getElementById("mc_span").textContent = "mc";
-            document.getElementById("dess_span").textContent = "dess";
+            var entRadios = document.getElementsByName("ent");
+            entRadios.forEach(function verifCheg(val, n, arr) {
+                if (val.checked) {
+                    document.getElementById("ent_span").textContent = val.value;
+                }
+            });
 
+             var mcRadios = document.getElementsByName("mc");
+            mcRadios.forEach(function verifCheg(val, n, arr) {
+                if (val.checked) {
+                    document.getElementById("mc_span").textContent = val.value;
+                }
+            });
+
+             var dessertRadios = document.getElementsByName("dessert");
+            dessertRadios.forEach(function verifCheg(val, n, arr) {
+                if (val.checked) {
+                    document.getElementById("dess_span").textContent = val.value;
+                }
+            });
+           
             document.getElementById("chair_number").textContent = getRandomInt(1, 50);
         }
 
@@ -91,43 +108,6 @@
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min)) + min;
-        }
-
-        function addContact() {
-            nameField = document.getElementById("name_field");
-            numberField = document.getElementById("number_field");
-            req = new XMLHttpRequest();
-            req.onreadystatechange = function () {
-                console.log("orsc. s: " + req.readyState);
-                if (req.readyState === 4 && req.status === 200) {
-                    console.log("rs 4");
-
-                    nameField.value = "";
-                    numberField.value = "";
-
-                    document.getElementById("cont_suc_alert").style.
-                        display = "block";
-                    window.setTimeout(function () {
-                        hideNofifyContAdded();
-                    }, 3000);
-
-                    downloadContacts();
-                }
-            };
-            req.open("POST", "http://127.0.0.1:3000/new_contact", true);
-            var newCont = {
-                id: '', name: nameField.value,
-                number: numberField.value
-            };
-            req.setRequestHeader("Content-Type", "application/json");
-            req.send(JSON.stringify(newCont));
-
-        }
-
-        function hideNofifyContAdded() {
-            console.log("hiding");
-            document.getElementById("cont_suc_alert").style.
-                display = "none";
         }
     </script>
 </body>
