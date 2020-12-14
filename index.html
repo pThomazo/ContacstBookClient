@@ -22,20 +22,26 @@
     <div id="meal" style="display: none;">
         <div id="entree">
             <h5>Entree</h5>
-            <input type="checkbox" id="ent1" value="1" />
-            <input type="checkbox" id="ent2" value="2" />
+            <label for="ent1">Ent 1</label>
+            <input type="radio" name="ent" id="ent1" value="ent_1" />
+            <label for="ent2">Ent 2</label>
+            <input type="radio" name="ent" id="ent2" value="ent_2" />
         </div>
 
         <div id="main course">
-             <h5>Main course</h5>
-            <input type="checkbox" id="mc1" value="1" />
-            <input type="checkbox" id="mc2" value="2" />
+            <h5>Main course</h5>
+            <label for="mc1">Mc 1</label>
+            <input type="radio" name="mc" id="mc1" value="mc_1" />
+            <label for="mc2">Mc 2</label>
+            <input type="radio" name="mc" id="mc2" value="mc_2" />
         </div>
 
         <div id="dessert">
-             <h5>Dessert</h5>
-            <input type="checkbox" id="mc1" value="1" />
-            <input type="checkbox" id="mc2" value="2" />
+            <h5>Dessert</h5>
+            <label for="dess1">Dess 1</label>
+            <input type="radio" name="dessert" id="dess1" value="dess_1" />
+            <label for="dess1">Dess 1</label>
+            <input type="radio" name="dessert" id="dess2" value="dess_2" />
         </div>
 
         <button onclick="choiceCompleted()">Done</button>
