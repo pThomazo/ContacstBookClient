@@ -22,29 +22,37 @@
     <div id="meal" style="display: none;">
         <div id="entree">
             <h5>Entree</h5>
-            <label for="ent1">Ent 1</label>
-            <input type="radio" name="ent" id="ent1" value="ent_1" /><br />
-            <label for="ent2">Ent 2</label>
-            <input type="radio" name="ent" id="ent2" value="ent_2" />
+            <div id="entree_options">
+                <label for="ent1">Ent 1</label>
+                <input type="radio" name="ent" id="ent1" value="ent_1" /><br />
+                <label for="ent2">Ent 2</label>
+                <input type="radio" name="ent" id="ent2" value="ent_2" />
+            </div>
         </div>
 
         <div id="main course">
             <h5>Main course</h5>
-            <label for="mc1">Mc 1</label>
-            <input type="radio" name="mc" id="mc1" value="mc_1" /><br />
-            <label for="mc2">Mc 2</label>
-            <input type="radio" name="mc" id="mc2" value="mc_2" />
+
+            <div id="mc_options">
+                <label for="mc1">Mc 1</label>
+                <input type="radio" name="mc" id="mc1" value="mc_1" /><br />
+                <label for="mc2">Mc 2</label>
+                <input type="radio" name="mc" id="mc2" value="mc_2" />
+            </div>
         </div>
 
         <div id="dessert">
             <h5>Dessert</h5>
-            <label for="dess1">Dess 1</label>
-            <input type="radio" name="dessert" id="dess1" value="dess_1" /><br />
-            <label for="dess1">Dess 1</label>
-            <input type="radio" name="dessert" id="dess2" value="dess_2" />
+
+            <div id="dess_opt">
+                <label for="dess1">Dess 1</label>
+                <input type="radio" name="dessert" id="dess1" value="dess_1" /><br />
+                <label for="dess1">Dess 1</label>
+                <input type="radio" name="dessert" id="dess2" value="dess_2" />
+            </div>
         </div>
 
-        <button onclick="choiceCompleted()">Done</button>
+        <button onclick="choiceCompleted()" style="margin-top: 10px">Done</button>
     </div>
 
     <!-- Result -->
@@ -58,21 +66,67 @@
     </div>
 
     <script>
+        var jsonDB = '{"entree": [{"name":"Ent 1","value": "ent1"},{"name":"Ent 2","value": "ent2"},{"name":"Ent 3","value": "ent3"}],' +
+            '"mc": [{"name":"Mc 1","value": "ent1"},{"name":"Mc 3","value": "ent1"},{"name":"Mc 3","value": "ent1"}],' +
+            '"dessert": [{"name":"Dess 1","value": "dess1"},{"name":"D 2","value": "ent1"},{"name":"D 3","value": "ent1"}]' +
+            '}';
+      
+       //      document.write("After js");
+
+        var dbObject = JSON.parse(jsonDB);
+
+//           document.write("after parse");
+
+        window.onload = function () {
+            // document.write("on l ");
+            var ent_opt = document.getElementById("entree_options");
+          //  document.write("ent opt: "+ent_opt);
+            var ent_opt_html = "";
+
+            for (i in dbObject.entree) {
+                      ent_opt_html += "<input type='radio' name='ent' id='" + dbObject.entree[i].value + "' value='" + dbObject.entree[i].value + "' />";
+                ent_opt_html += "<label for='" + dbObject.entree[i].value + "'>" + dbObject.entree[i].name + "</label><br/>";
+            }
+
+            ent_opt.innerHTML = ent_opt_html;
+            
+            var mc_opt = document.getElementById("mc_options");
+          //  document.write("ent opt: "+ent_opt);
+            var mc_opt_html = "";
+
+            for (i in dbObject.mc) {
+                      mc_opt_html += "<input type='radio' name='mc' id='" + dbObject.mc[i].value + "' value='" + dbObject.mc[i].value + "' />";
+                mc_opt_html += "<label for='" + dbObject.mc[i].value + "'>" + dbObject.mc[i].name + "</label><br/>";
+            }
+
+            mc_opt.innerHTML = mc_opt_html;
+              var dess_opt = document.getElementById("dess_opt");
+          //  document.write("ent opt: "+ent_opt);
+            var dess_opt_html = "";
+
+            for (i in dbObject.dessert) {
+                      dess_opt_html += "<input type='radio' name='dessert' id='" + dbObject.dessert[i].value + "' value='" + dbObject.dessert[i].value + "' />";
+                dess_opt_html += "<label for='" + dbObject.dessert[i].value + "'>" + dbObject.dessert[i].name + "</label><br/>";
+            }
+
+            dess_opt.innerHTML = dess_opt_html;
+        };
+
         //var test = new XMLHttpRequest();
 
-         //document.write("before rs");
+        //document.write("before rs");
 
         //test.onreadystatechange= function(){
-            //document.write("rs: "+test.readyState);
-          //  document.write(test.responseText);
+        //document.write("rs: "+test.readyState);
+        //  document.write(test.responseText);
         //};
 
         //test.open("get","https://3000-c29524fd-7823-4312-88f9-4cd3c11a893e.ws-us03.gitpod.io/contacts",true);
 
-      //  test.send();
+        //  test.send();
 
         function choiceCompleted() {
-           
+
             resD = document.getElementById("div_result");
             resD.style.display = "block";
 
@@ -90,20 +144,20 @@
                 }
             });
 
-             var mcRadios = document.getElementsByName("mc");
+            var mcRadios = document.getElementsByName("mc");
             mcRadios.forEach(function verifCheg(val, n, arr) {
                 if (val.checked) {
                     document.getElementById("mc_span").textContent = val.value;
                 }
             });
 
-             var dessertRadios = document.getElementsByName("dessert");
+            var dessertRadios = document.getElementsByName("dessert");
             dessertRadios.forEach(function verifCheg(val, n, arr) {
                 if (val.checked) {
                     document.getElementById("dess_span").textContent = val.value;
                 }
             });
-           
+
             document.getElementById("chair_number").textContent = getRandomInt(1, 50);
         }
 
